@@ -1,3 +1,42 @@
 // Include any postdeployment steps here, such as steps necessary to test that the deployment was successful. If there are no postdeployment steps, leave this file empty.
 
 == Postdeployment steps
+
+=== Test the deployment
+
+To verify the deployment of the Atom in your Boomi account, first log in to https://platform.boomi.com/[AtomSphere^]. On the *Manage* menu, select *Atom Management*. The new Atom deployed by this Partner Solution is displayed under *Unattached Atoms*.
+
+[#unattached-atom]
+ Boomi AtomSphere dashboard
+[link=images/image3.png]
+image::../docs/deployment_guide/images/image3.png[unattached-atom,width=648,height=397]
+
+=== Best practices for using {partner-product-short-name} on AWS
+
+The Atom that is deployed by this Partner Solution can be managed from the Boomi AtomSphere dashboard. From the AtomSphere dashboard, you can https://help.boomi.com/bundle/integration/page/t-atm-Attaching_an_Atom_to_an_Enviro.html[attach^] the Atom to environments and deploy processes to it.
+
+:xrefstyle: short
+In <<deployed-atom>>, the Atom server is identified by the Domain Name System (DNS) name `ip-172-30-7.186.ec2.internal`. The account contains environments, one labeled *Production* and the other labeled *Test*.
+
+[#deployed-atom]
+.Boomi AtomSphere dashboard with an unattached AWS-managed Atom server
+[link=images/image4.png]
+image::../docs/deployment_guide/images/image4.png[deployed-atom,width=648,height=258]
+
+=== Security
+
+This Partner Solution deploys a bastion host and a Boomi Atom server into an AWS VPC. The bastion host is the only means of accessing the Atom at a command-line level. The Atom is deployed into a private subnet and cannot be reached through the internet. It communicates through a NAT gateway for updates and patches.
+
+=== Performance Monitoring
+
+Monitoring the CPU, network, and Amazon Elastic Block Store (Amazon EBS) performance of your Atom is done using CloudWatch metrics.
+
+CPU and network performance is measured in utilization, network in and out, network packets in and out, and system status checks.
+
+Amazon EBS volume performance is measured in read and write throughput, average read and write size, read and write bandwidth, read and write latency, and volume idle time. 
+
+Further monitoring of disk space and inode consumption must be performed at the command line level of the EC2 instance using the `df -h` and `df -i` Linux commands.
+// 
+// [#perf-monitoring]
+// [link=images/image6.png]
+// image::../images/image6.png[image,width=648,height=220]
